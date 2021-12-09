@@ -3,11 +3,11 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import QuestionAdd from './QuestionAdd';
 import Question from './Question';
 import { updateQuiz, uploadImage, readQuiz } from '../api-quiz';
-import { isAuthenticated } from '../auth/auth-helper';
+import { isAuthenticated, getRole, getUser } from '../auth/auth-helper';
 
 const QuizEdit = ({ match }) => {
   const [open, setOpen] = useState(false);
@@ -17,6 +17,8 @@ const QuizEdit = ({ match }) => {
     questions: [],
     error: ''
   });
+  const [mentorId, setMentorId] = useState(null);
+
   const _isMounted = useRef(true);
 
   const history = useHistory();
@@ -42,6 +44,7 @@ const QuizEdit = ({ match }) => {
             quizDescription: data.quizDescription,
             questions: data.questions || []
           });
+          setMentorId(data.mentorId);
         }
       }
     });
@@ -95,6 +98,12 @@ const QuizEdit = ({ match }) => {
 
     //console.log(files);
   };
+
+  if (
+    mentorId &&
+    (getRole() !== 'mentor' || parseInt(mentorId) !== parseInt(getUser()))
+  )
+    return <Redirect to='/' />;
 
   return (
     <Box sx={{ width: '50%', margin: 'auto' }}>

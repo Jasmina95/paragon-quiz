@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -12,7 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import QuestionAnswer from './QuestionAnswer';
 import { getImage } from '../api-quiz';
-import { isAuthenticated } from '../auth/auth-helper';
+import { isAuthenticated, getRole } from '../auth/auth-helper';
 
 const QuestionAdd = ({ values, setValues, open, setOpen }) => {
   const [question, setQuestion] = useState('');
@@ -114,6 +114,8 @@ const QuestionAdd = ({ values, setValues, open, setOpen }) => {
 
     setOpen(false);
   };
+
+  if (getRole() !== 'mentor') return <Redirect to='/' />;
 
   return (
     <Dialog maxWidth='md' fullWidth open={open}>

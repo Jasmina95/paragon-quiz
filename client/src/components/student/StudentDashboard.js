@@ -5,18 +5,18 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useHistory, Redirect } from 'react-router-dom';
 import { getUsername, getRole } from '../auth/auth-helper';
-import MyQuizzes from './MyQuizzes';
-import MyDrafts from './MyDrafts';
+import AllQuizzes from './AllQuizzes';
+import DoneQuizzes from './DoneQuizzes';
 
-const MentorDashboard = () => {
+const StudentDashboard = () => {
   const history = useHistory();
   const [values, setValues] = useState({
     quizzes: true,
-    drafts: false
+    done: false
   });
 
-  if (getRole() !== 'mentor') return <Redirect to='/' />;
-  
+  if (getRole() !== 'student') return <Redirect to='/' />;
+
   return (
     <Box sx={{ ml: '25px', mr: '25px' }}>
       <Box
@@ -31,21 +31,20 @@ const MentorDashboard = () => {
           Welcome {getUsername()}!
         </Typography>
         <Button
-          onClick={() => setValues({ ...values, quizzes: true, drafts: false })}
+          onClick={() => setValues({ ...values, quizzes: true, done: false })}
         >
-          My Quizzes
+          All Quizzes
         </Button>
         <Button
-          onClick={() => setValues({ ...values, quizzes: false, drafts: true })}
+          onClick={() => setValues({ ...values, quizzes: false, done: true })}
         >
-          My Drafts
+          Done
         </Button>
-        <Button onClick={() => history.push('/newQuiz')}>Add Quiz</Button>
       </Box>
-      {values.drafts && <MyDrafts />}
-      {values.quizzes && <MyQuizzes />}
+      {values.quizzes && <AllQuizzes />}
+      {values.done && <DoneQuizzes />}
     </Box>
   );
 };
 
-export default MentorDashboard;
+export default StudentDashboard;

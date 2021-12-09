@@ -23,7 +23,7 @@ const createQuiz = (req, res) => {
       }
 
       res.status(200).json({
-          message: 'Successful creation of a quiz!'
+        message: 'Successful creation of a quiz!'
       });
     });
   } else {
@@ -70,15 +70,17 @@ const listPublishedQuizzes = (req, res) => {
 };
 
 const listAllPublishedQuizzes = (req, res) => {
-  Quiz.find({ published: true, deleted: false }).exec((err, quizzes) => {
-    if (err) {
-      return res.status(400).json({
-        error: errorHandler.getErrorMessage(err)
-      });
-    }
+  Quiz.find({ published: true, deleted: false })
+    .sort('mentorFullName')
+    .exec((err, quizzes) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        });
+      }
 
-    res.status(200).json(quizzes);
-  });
+      res.status(200).json(quizzes);
+    });
 };
 
 const quizById = (req, res, next, id) => {

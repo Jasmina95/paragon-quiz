@@ -4,4 +4,8 @@ const userCtrl = require('../controllers/user.controller');
 
 const router = express.Router();
 
-module.exports =  router;
+router.route('/api/users/:userId').get(authCtrl.requireSignIn, userCtrl.read);
+
+router.param('userId', userCtrl.userById);
+
+module.exports = router;

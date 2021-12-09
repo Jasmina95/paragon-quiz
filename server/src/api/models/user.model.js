@@ -54,7 +54,10 @@ const UserSchema = new mongoose.Schema({
           message: '{VALUE} is not supported!'
         }
       },
-      score: Number,
+      scores: [{
+          date: Date,
+          score: Number
+      }],
       numberOfTries: Number,
       answers: [
         {
