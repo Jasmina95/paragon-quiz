@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "firstName": "Paragon",
+      "lastName": "Mentor",
+      "email": "paragon@paragon.ba",
+      "password": "Paragon202!",
+      "role": "mentor"
+    },
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@gmail.com",
+      "password": "changeMe!",
+      "role": "mentor"
+    },
+    {
+      "firstName": "Fikreta",
+      "lastName": "Alihodzic",
+      "email": "fikreta@gmail.com",
+      "password": "changeMe!",
+      "role": "student"
+    },
+    {
+      "firstName": "Tarik",
+      "lastName": "Helac",
+      "email": "tarik@gmail.com",
+      "password": "changeMe!",
+      "role": "student"
+    }
+  ]
+}
