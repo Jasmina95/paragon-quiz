@@ -6,6 +6,8 @@ import Login from './components/auth/Login';
 import PrivateRoute from './components/auth/PrivateRoute';
 import MentorDashboard from './components/mentor/MentorDashboard';
 import QuizAdd from './components/mentor/QuizAdd';
+import QuizEdit from './components/mentor/QuizEdit';
+import QuizView from './components/mentor/QuizView';
 
 const MainRouter = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -20,7 +22,7 @@ const MainRouter = () => {
         authenticated={authenticated}
         setAuthenticated={setAuthenticated}
       />
-      <div style={{ marginTop: '100px' }}>
+      <div style={{ marginTop: '90px' }}>
         <Switch>
           <Route
             exact
@@ -33,6 +35,8 @@ const MainRouter = () => {
             component={MentorDashboard}
           />
           <PrivateRoute exact path='/newQuiz' component={QuizAdd} />
+          <PrivateRoute exact path='/quiz/edit/:id' component={QuizEdit} />
+          <PrivateRoute exact path='/quiz/view/:id' component={QuizView} />
         </Switch>
       </div>
     </div>

@@ -19,7 +19,6 @@ const getErrorMessage = err => {
 
 const getUniqueErrorMessage = err => {
   let output;
-  console.log(err.message);
   try {
     let fieldName = err.message.substring(
       err.message.lastIndexOf('{') + 2,

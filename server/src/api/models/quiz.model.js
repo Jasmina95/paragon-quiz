@@ -7,6 +7,10 @@ const QuizSchema = new mongoose.Schema({
     type: Number,
     required: 'Mentor Id is required!'
   },
+  mentorFullName: {
+    type: String,
+    required: 'Mentor full name is required'
+  },
   quizName: {
     type: String,
     required: 'Quiz name is required!',
@@ -43,6 +47,14 @@ const QuizSchema = new mongoose.Schema({
   published: {
     type: Boolean,
     default: false
+  },
+  modifiedDate: {
+    type: Date,
+    set: changeDate
+  },
+  publishedDate: {
+    type: Date,
+    set: changeDate
   }
 });
 
@@ -69,6 +81,19 @@ QuizSchema.path('questions.correctAnswers').validate(function (answers) {
   else if (answers.length === 0) return false;
   else return true;
 }, 'At least one correct answer is required!');
+
+function changeDate(created) {
+  let dateTime = new Date(created);
+  const offset = dateTime.getTimezoneOffset();
+  dateTime.setHours(
+    dateTime.getHours(),
+    dateTime.getMinutes() - offset,
+    dateTime.getSeconds(),
+    dateTime.getMilliseconds()
+  );
+
+  return dateTime;
+}
 
 QuizSchema.plugin(AutoIncrement, { id: 'quiz_counter', inc_field: '_id' });
 

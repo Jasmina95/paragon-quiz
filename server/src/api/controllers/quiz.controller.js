@@ -1,19 +1,30 @@
 const Quiz = require('../models/quiz.model');
 const errorHandler = require('../helpers/dbErrorHandler');
 const fs = require('fs');
+const _ = require('lodash');
 
 const createQuiz = (req, res) => {
   if (req.auth.role === 'mentor') {
     req.body.mentorId = req.auth._id;
+    req.body.mentorFullName = req.auth.name;
+
+    if (req.body.published) {
+      req.body.publishedDate = Date.now();
+    } else {
+      req.body.modifiedDate = Date.now();
+    }
+
     const quiz = new Quiz(req.body);
-    quiz.save((err, savedQuiz) => {
+    quiz.save(err => {
       if (err) {
         return res.status(400).json({
           error: errorHandler.getErrorMessage(err)
         });
       }
 
-      res.status(200).json(savedQuiz);
+      res.status(200).json({
+          message: 'Successful creation of a quiz!'
+      });
     });
   } else {
     return res.status(403).json({
@@ -22,8 +33,44 @@ const createQuiz = (req, res) => {
   }
 };
 
-const listQuizzes = (req, res) => {
-  Quiz.find({ deleted: false }).exec((err, quizzes) => {
+const listDrafts = (req, res) => {
+  Quiz.find({
+    published: false,
+    deleted: false,
+    mentorId: req.auth._id
+  })
+    .sort('-modifiedDate')
+    .exec((err, drafts) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        });
+      }
+
+      res.status(200).json(drafts);
+    });
+};
+
+const listPublishedQuizzes = (req, res) => {
+  Quiz.find({
+    published: true,
+    deleted: false,
+    mentorId: req.auth._id
+  })
+    .sort('-publishedDate')
+    .exec((err, quizzes) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        });
+      }
+
+      res.status(200).json(quizzes);
+    });
+};
+
+const listAllPublishedQuizzes = (req, res) => {
+  Quiz.find({ published: true, deleted: false }).exec((err, quizzes) => {
     if (err) {
       return res.status(400).json({
         error: errorHandler.getErrorMessage(err)
@@ -32,6 +79,70 @@ const listQuizzes = (req, res) => {
 
     res.status(200).json(quizzes);
   });
+};
+
+const quizById = (req, res, next, id) => {
+  Quiz.findById(id).exec((err, quiz) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler.getErrorMessage(err)
+      });
+    }
+
+    req.quiz = quiz;
+    next();
+  });
+};
+
+const read = (req, res) => {
+  return res.status(200).json(req.quiz);
+};
+
+const update = (req, res) => {
+  if (req.auth.role === 'mentor') {
+    if (req.body.published) {
+      req.body.publishedDate = Date.now();
+    } else {
+      req.body.modifiedDate = Date.now();
+    }
+    let quiz = req.quiz;
+    quiz = _.extend(quiz, req.body);
+
+    quiz.save((err, updatedQuiz) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        });
+      }
+
+      res.status(200).json(updatedQuiz);
+    });
+  } else {
+    return res.status(403).json({
+      error: 'Only mentor is allowed to update quizzes!'
+    });
+  }
+};
+
+const remove = (req, res) => {
+  if (req.auth.role === 'mentor') {
+    let quiz = req.quiz;
+    quiz = _.extend(quiz, { deleted: true });
+
+    quiz.save((err, deletedQuiz) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        });
+      }
+
+      res.status(200).json(deletedQuiz);
+    });
+  } else {
+    return res.status(403).json({
+      error: 'Only mentor is allowed to delete quizzes!'
+    });
+  }
 };
 
 const getImage = (req, res) => {
@@ -58,16 +169,34 @@ const uploadImage = (req, res) => {
 
   const files = req.files['files[]'];
 
-  //console.log(files);
-
-  files.forEach(file => {
-    file.mv(`../client/public/images/${file.name}`, err => {
+  if (Array.isArray(files)) {
+    files.forEach(file => {
+      file.mv(`../client/public/images/${file.name}`, err => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+      });
+    });
+  } else {
+    files.mv(`../client/public/images/${files.name}`, err => {
       if (err) {
         return res.status(500).send(err);
       }
     });
-  });
+  }
+
   res.status(200).json({ message: 'Successfull upload of images!' });
 };
 
-module.exports = { createQuiz, listQuizzes, getImage, uploadImage };
+module.exports = {
+  createQuiz,
+  listDrafts,
+  listPublishedQuizzes,
+  listAllPublishedQuizzes,
+  quizById,
+  read,
+  update,
+  remove,
+  getImage,
+  uploadImage
+};

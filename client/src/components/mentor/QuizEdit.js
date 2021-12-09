@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -6,10 +6,10 @@ import Box from '@mui/material/Box';
 import { useHistory } from 'react-router-dom';
 import QuestionAdd from './QuestionAdd';
 import Question from './Question';
-import { createQuiz, uploadImage } from '../api-quiz';
+import { updateQuiz, uploadImage, readQuiz } from '../api-quiz';
 import { isAuthenticated } from '../auth/auth-helper';
 
-const QuizAdd = () => {
+const QuizEdit = ({ match }) => {
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState({
     quizName: '',
@@ -17,9 +17,35 @@ const QuizAdd = () => {
     questions: [],
     error: ''
   });
+  const _isMounted = useRef(true);
+
   const history = useHistory();
 
   const token = isAuthenticated();
+
+  useEffect(() => {
+    return () => {
+      _isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    readQuiz(parseInt(match.params.id), token).then(data => {
+      if (data && data.error) {
+        console.log(data.error);
+      } else {
+        console.log(data);
+        if (_isMounted.current) {
+          setValues({
+            ...values,
+            quizName: data.quizName,
+            quizDescription: data.quizDescription,
+            questions: data.questions || []
+          });
+        }
+      }
+    });
+  }, [match.params.id, token]);
 
   const onChangeHandler = field => e => {
     setValues({ ...values, [field]: e.target.value });
@@ -46,7 +72,7 @@ const QuizAdd = () => {
       published: value
     };
 
-    createQuiz(quiz, token).then(data => {
+    updateQuiz(parseInt(match.params.id), quiz, token).then(data => {
       if (data && data.error) {
         setValues({ ...values, error: data.error });
       } else {
@@ -153,4 +179,4 @@ const QuizAdd = () => {
   );
 };
 
-export default QuizAdd;
+export default QuizEdit;

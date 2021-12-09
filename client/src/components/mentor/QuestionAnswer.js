@@ -74,7 +74,11 @@ const QuestionAnswer = ({
     }
 
     setAnswers(newAnswerObject);
-    setCorrect(false);
+    setCorrect(
+      (newCorrect.length > 0 &&
+        newCorrect.some(answer => answer === answers[answerKey])) ||
+        false
+    );
   };
 
   return (

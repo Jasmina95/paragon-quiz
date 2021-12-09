@@ -16,6 +16,14 @@ const getUser = () => {
   } else return false;
 };
 
+const getUsername = () => {
+  if (typeof window == 'undefined') return false;
+
+  if (sessionStorage.getItem('jwtToken')) {
+    return jwtDecode(sessionStorage.getItem('jwtToken')).name;
+  } else return false;
+};
+
 const getRole = () => {
   if (typeof window == 'undefined') return false;
 
@@ -24,4 +32,4 @@ const getRole = () => {
   } else return false;
 };
 
-export { isAuthenticated, getUser, getRole };
+export { isAuthenticated, getUser, getUsername, getRole };
