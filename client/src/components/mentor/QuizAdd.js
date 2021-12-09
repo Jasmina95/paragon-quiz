@@ -67,8 +67,6 @@ const QuizAdd = () => {
     //console.log(files);
   };
 
-  const publishQuiz = () => {};
-
   return (
     <Box sx={{ width: '50%', margin: 'auto' }}>
       <TextField
