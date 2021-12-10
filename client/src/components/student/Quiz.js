@@ -5,13 +5,10 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
-import { isAuthenticated, getRole, getUser } from '../auth/auth-helper';
+import { isAuthenticated, getRole } from '../auth/auth-helper';
 import { readQuiz } from '../api-quiz';
 import { CardActions } from '@mui/material';
 import { useHistory, Redirect } from 'react-router-dom';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Answer from './Answer';
 import Question from './Question';
 
 const Quiz = ({ match }) => {

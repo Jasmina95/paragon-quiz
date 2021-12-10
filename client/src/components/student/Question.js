@@ -1,16 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Button from '@mui/material/Button';
+import React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
-import { isAuthenticated, getRole, getUser } from '../auth/auth-helper';
-import { readQuiz } from '../api-quiz';
-import { CardActions } from '@mui/material';
-import { useHistory, Redirect } from 'react-router-dom';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Answer from './Answer';
 
 const Question = ( { answers, setAnswers, question, questionInd }) => {
