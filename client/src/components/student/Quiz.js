@@ -61,7 +61,13 @@ const Quiz = ({ match }) => {
           {quiz?.questions &&
             quiz.questions.length > 0 &&
             quiz.questions.map((question, idx) => (
-              <Question key={idx} answers={answers} setAnswers={setAnswers} question={question} questionInd={idx} />
+              <Question
+                key={idx}
+                answers={answers}
+                setAnswers={setAnswers}
+                question={question}
+                questionInd={idx}
+              />
             ))}
         </Box>
       </CardContent>
@@ -70,13 +76,7 @@ const Quiz = ({ match }) => {
           variant='contained'
           onClick={() => history.push(`/quiz/results/${match.params.id}`)}
         >
-          View Results
-        </Button>
-        <Button
-          variant='contained'
-          onClick={() => history.push('/student_dashboard')}
-        >
-          Close
+          Submit
         </Button>
       </CardActions>
     </Card>
