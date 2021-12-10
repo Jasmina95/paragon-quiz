@@ -9,6 +9,7 @@ import QuizAdd from './components/mentor/QuizAdd';
 import QuizEdit from './components/mentor/QuizEdit';
 import QuizView from './components/mentor/QuizView';
 import StudentDashboard from './components/student/StudentDashboard';
+import Quiz from './components/student/Quiz';
 
 const MainRouter = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -43,6 +44,7 @@ const MainRouter = () => {
             path='/student_dashboard'
             component={StudentDashboard}
           />
+          <PrivateRoute exact path='/quiz/solve/:id' component={Quiz} />
         </Switch>
       </div>
     </div>
