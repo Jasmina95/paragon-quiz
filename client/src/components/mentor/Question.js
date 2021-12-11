@@ -62,12 +62,14 @@ const Question = ({ question, idx, values, setValues }) => {
           {question.file && (
             <img
               src={URL.createObjectURL(question.file)}
+              alt='question'
               style={{ maxWidth: '100%', maxHeight: '150px' }}
             />
           )}
           {!question.file && question.image && (
             <img
               src={`${process.env.PUBLIC_URL}/images/${question.image}`}
+              alt='question'
               style={{ maxWidth: '100%', maxHeight: '150px' }}
             />
           )}

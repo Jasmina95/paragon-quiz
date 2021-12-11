@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getDoneQuizzes } from '../api-user';
 import { isAuthenticated, getUser, getRole } from '../auth/auth-helper';
-import { Redirect, useHistory } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { Redirect } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import StudentQuizCard from './StudentQuizCard';
@@ -26,7 +24,6 @@ const DoneQuizzes = () => {
         if (_isMounted.current) {
           setQuizzes(data);
         }
-        //console.log(data);
       }
     });
   });

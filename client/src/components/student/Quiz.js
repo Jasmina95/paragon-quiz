@@ -60,9 +60,12 @@ const Quiz = ({ match }) => {
     let selectedAnswers = [];
     array.forEach(question => {
       let newArr = [];
-      for (const [key, value] of Object.entries(question)) {
-        if (value.selected) newArr.push(value.value);
-      }
+      Object.entries(question).forEach(questionEntry => {
+        if (questionEntry[1].selected) newArr.push(questionEntry[1].value);
+      });
+    //   for (const [_, value] of Object.entries(question)) {
+    //     if (value.selected) newArr.push(value.value);
+    //   }
       selectedAnswers.push(newArr);
     });
     if (selectedAnswers.some(answer => answer.length === 0)) {

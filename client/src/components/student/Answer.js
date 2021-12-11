@@ -17,7 +17,7 @@ const Answer = ({ answer, answerInd, questionInd, setAnswers, answers }) => {
           selected: checked
         }
       }
-    });
+    }); //eslint-disable-next-line
   }, [checked]);
 
   return (

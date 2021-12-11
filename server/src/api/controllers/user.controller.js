@@ -125,7 +125,7 @@ const updateQuizResults = (req, res) => {
           status: status,
           scores: [
             {
-              date: changeDate(Date.now()),
+              date: Date.now(),
               score: score
             }
           ],

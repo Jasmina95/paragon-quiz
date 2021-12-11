@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useHistory } from 'react-router-dom';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Divider from '@mui/material/Divider';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
 const QuestionAnswer = ({
-  idx,
   answerKey,
   answers,
   setAnswers,
@@ -37,7 +29,7 @@ const QuestionAnswer = ({
       );
 
       setCorrectAnswers(newCorrect);
-    }
+    } //eslint-disable-next-line
   }, [correct]);
 
   const onChangeHandler = e => {

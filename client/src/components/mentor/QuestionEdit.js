@@ -202,7 +202,6 @@ const QuestionEdit = ({
                 Object.keys(answers).map((answer, idx) => (
                   <QuestionAnswer
                     key={idx}
-                    idx={idx}
                     answerKey={answer}
                     answers={answers}
                     setAnswers={setAnswers}

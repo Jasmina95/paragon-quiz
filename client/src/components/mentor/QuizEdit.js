@@ -47,7 +47,7 @@ const QuizEdit = ({ match }) => {
           setMentorId(data.mentorId);
         }
       }
-    });
+    }); //eslint-disable-next-line
   }, [match.params.id, token]);
 
   const onChangeHandler = field => e => {

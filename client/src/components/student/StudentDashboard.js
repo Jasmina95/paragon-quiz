@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useHistory, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { getUsername, getRole } from '../auth/auth-helper';
 import AllQuizzes from './AllQuizzes';
 import DoneQuizzes from './DoneQuizzes';
 
 const StudentDashboard = () => {
-  const history = useHistory();
   const [values, setValues] = useState({
     quizzes: true,
     done: false

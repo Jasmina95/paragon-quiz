@@ -16,9 +16,18 @@ import DialogActions from '@mui/material/DialogActions';
 
 const getDate = date => {
   const newDate = date.split('T')[0].split('-');
-  const time = date.split('T')[1].split(':');
 
   return `${newDate[2]}.${newDate[1]}.${newDate[0]}`;
+};
+
+const calculateTimeAndDate = quizDate => {
+  const today = new Date();
+  const newQuizDate = new Date(quizDate);
+  const differenceInHours = Math.floor(
+    (today - newQuizDate) / (1000 * 60 * 60)
+  );
+
+  return differenceInHours;
 };
 
 const StudentQuizCard = ({ quiz }) => {
@@ -54,15 +63,17 @@ const StudentQuizCard = ({ quiz }) => {
         }
       }
     });
-  }, []);
+  }, [quiz]);
 
   const takeQuiz = () => {
-    if (quizResult) {
-      if (quizResult.numberOfTries === 2) {
-        setOpenDialog(true);
-      } else {
-        history.push(`/quiz/solve/${quiz._id}`);
-      }
+    if (
+      quizResult?.numberOfTries === 2 ||
+      (quizResult?.numberOfTries === 1 &&
+        calculateTimeAndDate(quizResult?.scores[0].date) < 24)
+    ) {
+      setOpenDialog(true);
+    } else {
+      history.push(`/quiz/solve/${quiz._id}`);
     }
   };
 
@@ -158,7 +169,11 @@ const StudentQuizCard = ({ quiz }) => {
         onClose={() => setOpenDialog(false)}
       >
         <DialogContent sx={{ color: 'red' }}>
-          You already took this quiz twice. No more attempts are allowed!
+          {quizResult?.numberOfTries === 2
+            ? 'You already took this quiz twice. No more attempts are allowed!'
+            : `You are not able to retake the quiz in the next ${
+                24 - calculateTimeAndDate(quizResult?.scores[0].date)
+              } hour(s)!`}
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'right' }}>
           <Button onClick={() => setOpenDialog(false)}>Close</Button>

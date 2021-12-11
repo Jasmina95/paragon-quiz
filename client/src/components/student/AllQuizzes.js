@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useHistory, Redirect } from 'react-router-dom';
-import { getUsername, isAuthenticated, getRole } from '../auth/auth-helper';
+import { Redirect } from 'react-router-dom';
+import { isAuthenticated, getRole } from '../auth/auth-helper';
 import { listAllPublishedQuizzes } from '../api-quiz';
 import StudentQuizCard from './StudentQuizCard';
 
@@ -28,7 +26,7 @@ const AllQuizzes = () => {
         if (_isMounted.current) setQuizzes(data);
       }
     });
-  }, []);
+  }, [token]);
 
   if (getRole() !== 'student') return <Redirect to='/' />;
 
