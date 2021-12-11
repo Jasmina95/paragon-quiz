@@ -9,6 +9,10 @@ router
   .get(authCtrl.requireSignIn, userCtrl.read)
   .put(authCtrl.requireSignIn, userCtrl.updateQuizResults);
 
+router
+  .route('/user/quizzes/passed/:userId')
+  .get(authCtrl.requireSignIn, userCtrl.getDoneQuizzes);
+
 router.param('userId', userCtrl.userById);
 
 module.exports = router;

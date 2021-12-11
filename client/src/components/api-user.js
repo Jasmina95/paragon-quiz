@@ -31,4 +31,19 @@ const updateUsersQuiz = async (id, usersQuiz, token) => {
   }
 };
 
-export { read, updateUsersQuiz };
+const getDoneQuizzes = async (id, token) => {
+  try {
+    const res = await axios.get(`${baseUrl}/user/quizzes/passed/${id}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    });
+    return res.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+export { read, updateUsersQuiz, getDoneQuizzes };

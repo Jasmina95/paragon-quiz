@@ -148,4 +148,28 @@ const updateQuizResults = (req, res) => {
   });
 };
 
-module.exports = { userById, read, updateQuizResults };
+const getDoneQuizzes = (req, res) => {
+  const user = req.profile;
+  let doneQuizzes = user.quizzes.filter(({ status }) => status === 'passed');
+
+  let quizIds = [];
+  doneQuizzes.forEach(quiz => quizIds.push(quiz.quizId));
+
+  //console.log(quizIds);
+
+  if (quizIds.length > 0) {
+    Quiz.find({ _id: { $in: quizIds } }).exec((err, quizzes) => {
+      if (err) {
+        return res.status(404).json({
+          error: 'Quizzes not found!'
+        });
+      }
+
+      res.status(200).json(quizzes);
+    });
+  } else {
+    res.status(200).json([]);
+  }
+};
+
+module.exports = { userById, read, updateQuizResults, getDoneQuizzes };
