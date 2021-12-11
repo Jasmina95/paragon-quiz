@@ -4,7 +4,10 @@ const userCtrl = require('../controllers/user.controller');
 
 const router = express.Router();
 
-router.route('/api/users/:userId').get(authCtrl.requireSignIn, userCtrl.read);
+router
+  .route('/api/users/:userId')
+  .get(authCtrl.requireSignIn, userCtrl.read)
+  .put(authCtrl.requireSignIn, userCtrl.updateQuizResults);
 
 router.param('userId', userCtrl.userById);
 

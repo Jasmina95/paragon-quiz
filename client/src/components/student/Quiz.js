@@ -5,15 +5,18 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
-import { isAuthenticated, getRole } from '../auth/auth-helper';
+import { isAuthenticated, getRole, getUser } from '../auth/auth-helper';
 import { readQuiz } from '../api-quiz';
 import { CardActions } from '@mui/material';
 import { useHistory, Redirect } from 'react-router-dom';
 import Question from './Question';
+import { updateUsersQuiz } from '../api-user';
 
 const Quiz = ({ match }) => {
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState(null);
+  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState('');
   const _isMounted = useRef(true);
 
   const history = useHistory();
@@ -25,8 +28,6 @@ const Quiz = ({ match }) => {
       _isMounted.current = false;
     };
   }, []);
-
-  console.log(answers);
 
   useEffect(() => {
     readQuiz(parseInt(match.params.id), token).then(data => {
@@ -43,9 +44,47 @@ const Quiz = ({ match }) => {
           };
         });
         setAnswers(array);
+        setErrors(Array(data.questions.length).fill(''));
       }
     });
   }, [match.params.id, token]);
+
+  const submit = () => {
+    const array = Object.values(answers);
+    let selectedAnswers = [];
+    array.forEach(question => {
+      let newArr = [];
+      for (const [key, value] of Object.entries(question)) {
+        if (value.selected) newArr.push(value.value);
+      }
+      selectedAnswers.push(newArr);
+    });
+    console.log(selectedAnswers);
+    if (selectedAnswers.some(answer => answer.length === 0)) {
+      let newErrors = [];
+      selectedAnswers.forEach(answer => {
+        if (answer.length === 0)
+          newErrors.push('Please mark one or more answers!');
+        else newErrors.push('');
+      });
+
+      setErrors(newErrors);
+      setError('Please mark one or more answers on each question!');
+    } else {
+      const obj = {
+        answers: selectedAnswers || undefined,
+        quizId: quiz._id || undefined
+      };
+
+      updateUsersQuiz(getUser(), obj, token).then(data => {
+        if (data && data.error) {
+          console.log(data.error);
+        } else {
+          history.push('/student_dashboard');
+        }
+      });
+    }
+  };
 
   if (getRole() !== 'student') return <Redirect to='/' />;
 
@@ -67,15 +106,22 @@ const Quiz = ({ match }) => {
                 setAnswers={setAnswers}
                 question={question}
                 questionInd={idx}
+                error={errors[idx]}
               />
             ))}
         </Box>
+        {error && (
+          <Typography
+            variant='subtitle1'
+            align='center'
+            sx={{ color: 'red', mt: 3 }}
+          >
+            {error}
+          </Typography>
+        )}
       </CardContent>
       <CardActions sx={{ justifyContent: 'right' }}>
-        <Button
-          variant='contained'
-          onClick={() => history.push(`/quiz/results/${match.params.id}`)}
-        >
+        <Button variant='contained' onClick={submit}>
           Submit
         </Button>
       </CardActions>

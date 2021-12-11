@@ -16,4 +16,19 @@ const read = async (id, token) => {
   }
 };
 
-export { read };
+const updateUsersQuiz = async (id, usersQuiz, token) => {
+  try {
+    const res = await axios.put(`${baseUrl}/api/users/${id}`, usersQuiz, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    });
+    return res.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+export { read, updateUsersQuiz };

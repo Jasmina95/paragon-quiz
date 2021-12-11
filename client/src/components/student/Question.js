@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Answer from './Answer';
 
-const Question = ( { answers, setAnswers, question, questionInd }) => {
+const Question = ({ answers, setAnswers, question, questionInd, error }) => {
   return (
     <Box>
       <Typography variant='subtitle1'>
@@ -36,6 +36,15 @@ const Question = ( { answers, setAnswers, question, questionInd }) => {
           )}
         </Box>
       </Box>
+      {error && (
+        <Typography
+          variant='subtitle1'
+          align='center'
+          sx={{ color: 'red', mt: 3 }}
+        >
+          {error}
+        </Typography>
+      )}
       <Divider sx={{ mb: '15px' }} />
     </Box>
   );

@@ -75,7 +75,7 @@ const StudentQuizCard = ({ quiz }) => {
         <CardContent sx={{ position: 'absolute', bottom: 0 }}>
           <Typography variant='subtitle1'>
             Quiz passed:{' '}
-            {getDate(quizResult.scores[quizResult.scores.length - 1])}
+            {getDate(quizResult.scores[quizResult.scores.length - 1].date)}
           </Typography>
           <Divider />
           <CardActions>
@@ -108,7 +108,7 @@ const StudentQuizCard = ({ quiz }) => {
       )}
       {quizResult &&
         quizResult.status === 'failed' &&
-        quizResult.numberOfTries < 2 && (
+        quizResult.numberOfTries <= 2 && (
           <CardContent
             sx={{
               position: 'absolute',
