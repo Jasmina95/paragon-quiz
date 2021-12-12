@@ -71,7 +71,6 @@ const QuestionEdit = ({
 
   const addAnswer = () => {
     const num = Object.keys(answers).length;
-    console.log(num);
     setAnswers({ ...answers, [`answer${num + 1}`]: '' });
   };
 

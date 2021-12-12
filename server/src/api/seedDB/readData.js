@@ -6,8 +6,10 @@ require('dotenv').config({
 const config = require('../../config/config');
 
 const User = require('../models/user.model');
+const Quiz = require('../models/quiz.model');
 
 const users = require('./users.json');
+const quizzes = require('./quiz.json');
 
 async function processData() {
   mongoose.Promise = global.Promise;
@@ -31,18 +33,20 @@ async function processData() {
     await modelInstance.save();
   }
 
-  /*for (let i = 0; i < courses.data.length; i++) {
-    if (i === 0) console.log('Seeding courses...');
+  for (let i = 0; i < quizzes.data.length; i++) {
+    if (i === 0) console.log('Seeding quizzes...');
     const obj = {
-      title: courses.data[i].title || undefined,
-      description: courses.data[i].description || undefined,
-      level: courses.data[i].level || undefined,
-      duration: courses.data[i].duration || undefined,
-      mentors: courses.data[i].mentors || undefined
+      mentorId: quizzes.data[i].mentorId || undefined,
+      mentorFullName: quizzes.data[i].mentorFullName || undefined,
+      quizName: quizzes.data[i].quizName || undefined,
+      quizDescription: quizzes.data[i].quizDescription || undefined,
+      questions: quizzes.data[i].questions || undefined,
+      published: quizzes.data[i].published || undefined,
+      publishedDate: Date.now() || undefined
     };
-    const modelInstance = new Course(obj);
+    const modelInstance = new Quiz(obj);
     await modelInstance.save();
-  }*/
+  }
 
   mongoose.connection
     .close()

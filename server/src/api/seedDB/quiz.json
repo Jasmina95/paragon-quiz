@@ -1,0 +1,193 @@
+{
+  "data": [
+    {
+      "mentorId": 1,
+      "mentorFullName": "Paragon Mentor",
+      "quizName": "Java Oops Quiz",
+      "quizDescription": "Popularly known as Java's object-oriented programming concepts, Oops form the backbone of java programming. This \"Java OOPs Quiz\" is designed to test your understanding of the concepts of Java OOPs. Make sure to pick the right option to get the highest score! Good Luck!",
+      "questions": [
+        {
+          "question": "The inheriting class cannot override the definition of existing methods by providing its own implementation.",
+          "answers": ["True", "False", "It depends"],
+          "correctAnswers": ["False"],
+          "image": ""
+        },
+        {
+          "question": "At run-time, a Java program is nothing more than objects 'talking' to ___________.",
+          "answers": ["Other objects", "Other methods", "Other classes"],
+          "correctAnswers": ["Other objects"],
+          "image": ""
+        },
+        {
+          "question": "HAS-A relationships are based on inheritance, rather than usage.",
+          "answers": ["True", "False", "It depends"],
+          "correctAnswers": ["False"],
+          "image": ""
+        },
+        {
+          "question": "The methods in class object are: ",
+          "answers": ["Clone", "Notify", "Concat"],
+          "correctAnswers": ["Clone", "Notify"],
+          "image": ""
+        },
+        {
+          "question": "If you don't have the access to the source code for a class, but you want to change the way a method of that class works, then could you use subclassing to do that that is to extend the \"bad \" class and override the method with your own better code? ",
+          "answers": ["True", "False", "It depends"],
+          "correctAnswers": ["True"],
+          "image": ""
+        },
+        {
+          "question": "Interfaces are fast as it requires extra indirection to find corresponding method in the actual class.",
+          "answers": ["True", "False", "It depends"],
+          "correctAnswers": ["False"],
+          "image": ""
+        },
+        {
+          "question": "Examples of class are: ",
+          "answers": ["Classroom", "Car", "Person"],
+          "correctAnswers": ["Classroom", "Car", "Person"],
+          "image": ""
+        },
+        {
+          "question": "Method overloading is done during _______.",
+          "answers": ["Runtime", "Dynamic binding", "Program compilation"],
+          "correctAnswers": ["Program compilation"],
+          "image": ""
+        },
+        {
+          "question": "The benefits of the Object Orientation are:",
+          "answers": ["Inheritance", "Flexibillity", "Maintainability"],
+          "correctAnswers": ["Flexibillity", "Maintainability"],
+          "image": ""
+        },
+        {
+          "question": "Subclassing polymorphism is sometimes called \"true polymorphism\"",
+          "answers": ["True", "False", "It depends"],
+          "correctAnswers": ["True"],
+          "image": ""
+        },
+        {
+          "question": "The relation between Car and Owner or BankAccount and Customer is example for",
+          "answers": ["Aggregation", "Composition", "Association"],
+          "correctAnswers": ["Association"],
+          "image": ""
+        }
+      ],
+      "published": true
+    },
+    {
+      "mentorId": 1,
+      "mentorFullName": "Paragon Mentor",
+      "quizName": "Computer Programming Basics",
+      "quizDescription": "Below is a Trivia Knowledge Test on Computer Programming Basics! A program is a set of instructions given to the computer to perform a specific task; the instructions are written in programming languages. Do you know how to write a functional program? Do take this quiz and get to see how true that is. All the best!",
+      "questions": [
+        {
+          "question": "The surplus is related to Sufficient as _________ is related to Need",
+          "answers": ["Excess", "Storage", "Demand"],
+          "correctAnswers": ["Demand"],
+          "image": ""
+        },
+        {
+          "question": "The number of letters skipped in between adjacent letters in the series are multiples of 3. which of the following series observes this rule?",
+          "answers": ["DHLPU", "AELPZ", "GKOTZ"],
+          "correctAnswers": ["AELPZ"],
+          "image": ""
+        },
+        {
+          "question": "What will be the output of the following program? void main() { int i=0; for(;i<=2;) printf(\"%d\",++i); getch(); }",
+          "answers": ["2, 3, 2", "1, 2, 3", "Error"],
+          "correctAnswers": ["1, 2, 3"],
+          "image": ""
+        },
+        {
+          "question": "What is the maximum value that a signed integer constant can have?",
+          "answers": ["1.7014e+38", "32767", "32768"],
+          "correctAnswers": ["32767"],
+          "image": ""
+        },
+        {
+          "question": "What actually get pass when you pass an array as a function argument?",
+          "answers": [
+            "First value of the elements of array",
+            "All values of elements of the array",
+            "Base address of array"
+          ],
+          "correctAnswers": ["Base address of array"],
+          "image": ""
+        },
+        {
+          "question": "Identify the scalar data type in C.",
+          "answers": ["Double", "Function", "Array"],
+          "correctAnswers": ["Double"],
+          "image": ""
+        },
+        {
+          "question": "What is short int in C programming?",
+          "answers": [
+            "The basec data type of C",
+            "Qualifier",
+            "Short is the qualifier and int is the basic data type"
+          ],
+          "correctAnswers": [
+            "Short is the qualifier and int is the basic data type"
+          ],
+          "image": ""
+        },
+        {
+          "question": "Evaluate !(1 && !(0 || 1))",
+          "answers": ["Error", "True", "False"],
+          "correctAnswers": ["False"],
+          "image": ""
+        }
+      ],
+      "published": true
+    },
+    {
+      "mentorId": 2,
+      "mentorFullName": "John Doe",
+      "quizName": "React JS Quiz",
+      "quizDescription": "Test your knowledge!",
+      "questions": [
+        {
+          "question": "Everything in React is a _____________",
+          "answers": ["Module", "Component", "Class"],
+          "correctAnswers": ["Component"],
+          "image": ""
+        },
+        {
+          "question": "What is Babel?",
+          "answers": [
+            "A transpiler",
+            "A Compiler",
+            "Both Compiler and Transpiler"
+          ],
+          "correctAnswers": ["Both Compiler and Transpiler"],
+          "image": ""
+        },
+        {
+          "question": "How many elements does a react component return?",
+          "answers": ["1 Element", "2 Elements", "Multiple Elements"],
+          "correctAnswers": ["Multiple Elements"],
+          "image": ""
+        },
+        {
+          "question": "What is ReactJS?",
+          "answers": [
+            "Server-side Framework",
+            "User-interface framework",
+            "A Library for building interaction interfaces"
+          ],
+          "correctAnswers": ["A Library for building interaction interfaces"],
+          "image": ""
+        },
+        {
+          "question": "Which of the following API is a MUST for every ReactJS component?",
+          "answers": ["getInitialState", "render", "renderComponent"],
+          "correctAnswers": ["renderComponent"],
+          "image": ""
+        }
+      ],
+      "published": true
+    }
+  ]
+}

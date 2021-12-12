@@ -8,6 +8,9 @@ import QuestionAdd from './QuestionAdd';
 import Question from './Question';
 import { createQuiz, uploadImage } from '../api-quiz';
 import { isAuthenticated } from '../auth/auth-helper';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
 const QuizAdd = () => {
   const [open, setOpen] = useState(false);
@@ -17,6 +20,8 @@ const QuizAdd = () => {
     questions: [],
     error: ''
   });
+  const [openCloseModal, setOpenCloseModal] = useState(false);
+
   const history = useHistory();
 
   const token = isAuthenticated();
@@ -122,7 +127,7 @@ const QuizAdd = () => {
       <Box sx={{ width: '100%', textAlign: 'right', mt: '40px' }}>
         <Button
           variant='contained'
-          onClick={() => history.push('/mentor_dashboard')}
+          onClick={() => setOpenCloseModal(true)}
           sx={{ mt: '20px', mr: '5px' }}
         >
           Cancel
@@ -149,6 +154,31 @@ const QuizAdd = () => {
         open={open}
         setOpen={setOpen}
       />
+      <Dialog
+        maxWidth='sm'
+        fullWidth
+        open={openCloseModal}
+        onClose={() => setOpenCloseModal(false)}
+      >
+        <DialogContent>
+          <Typography variant='subtitle1' align='justify'>
+            This will cancel your latest entry, still, you will be able to
+            access previously saved entries. Are you sure?
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: 'center' }}>
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={() => history.push('/mentor_dashboard')}
+          >
+            Yes
+          </Button>
+          <Button variant='contained' onClick={() => setOpenCloseModal(false)}>
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

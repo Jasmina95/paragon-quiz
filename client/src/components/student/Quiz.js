@@ -21,7 +21,9 @@ const Quiz = ({ match }) => {
   const [submittedAnswers, setSubmittedAnswers] = useState([]);
   const [errors, setErrors] = useState([]);
   const [error, setError] = useState('');
+  const [result, setResult] = useState(null);
   const [open, setOpen] = useState(false);
+  const [openResultModal, setOpenResultModal] = useState(false);
 
   const _isMounted = useRef(true);
 
@@ -40,17 +42,19 @@ const Quiz = ({ match }) => {
       if (data && data.error) {
         console.log(data.error);
       } else {
-        setQuiz(data);
-        let array = {};
-        data.questions.forEach((question, index) => {
-          array[`question${index + 1}`] = {
-            answer1: { value: question.answers[0], selected: false },
-            answer2: { value: question.answers[1], selected: false },
-            answer3: { value: question.answers[2], selected: false }
-          };
-        });
-        setAnswers(array);
-        setErrors(Array(data.questions.length).fill(''));
+        if (_isMounted.current) {
+          setQuiz(data);
+          let array = {};
+          data.questions.forEach((question, index) => {
+            array[`question${index + 1}`] = {
+              answer1: { value: question.answers[0], selected: false },
+              answer2: { value: question.answers[1], selected: false },
+              answer3: { value: question.answers[2], selected: false }
+            };
+          });
+          setAnswers(array);
+          setErrors(Array(data.questions.length).fill(''));
+        }
       }
     });
   }, [match.params.id, token]);
@@ -63,9 +67,9 @@ const Quiz = ({ match }) => {
       Object.entries(question).forEach(questionEntry => {
         if (questionEntry[1].selected) newArr.push(questionEntry[1].value);
       });
-    //   for (const [_, value] of Object.entries(question)) {
-    //     if (value.selected) newArr.push(value.value);
-    //   }
+      //   for (const [_, value] of Object.entries(question)) {
+      //     if (value.selected) newArr.push(value.value);
+      //   }
       selectedAnswers.push(newArr);
     });
     if (selectedAnswers.some(answer => answer.length === 0)) {
@@ -98,10 +102,27 @@ const Quiz = ({ match }) => {
       if (data && data.error) {
         console.log(data.error);
       } else {
-        history.push('/student_dashboard');
+        const savedQuiz = data.quizzes.filter(
+          ({ quizId }) => quizId === parseInt(match.params.id)
+        )[0];
+
+        const obj = {
+          status: savedQuiz?.status,
+          score: `${savedQuiz?.scores[savedQuiz?.scores.length - 1].score}/${
+            savedQuiz?.answers.length
+          }`
+        };
+
+        setResult(obj);
         setOpen(false);
+        setOpenResultModal(true);
       }
     });
+  };
+
+  const closeModal = () => {
+    setOpenResultModal(false);
+    history.push('/student_dashboard');
   };
 
   if (getRole() !== 'student') return <Redirect to='/' />;
@@ -148,16 +169,25 @@ const Quiz = ({ match }) => {
       <Dialog
         maxWidth='sm'
         fullWidth
-        open={open}
-        onClose={() => setOpen(false)}
+        open={open || openResultModal}
+        onClose={open ? () => setOpen(false) : closeModal}
       >
         <DialogContent>
-          After submitting you can't edit given answers. Are you sure you want
-          to submit this Quiz?
+          {open
+            ? "After submitting you can't edit given answers. Are you sure you want to submit this Quiz?"
+            : `${
+                result?.status === 'passed'
+                  ? 'Congratulations, you passed the quiz. '
+                  : 'Unfortunately, you failed the quiz. '
+              }Your score is ${
+                result?.score
+              }. For more details check the SCORE button on the quiz card.`}
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'right' }}>
-          <Button onClick={() => setOpen(false)}>No</Button>
-          <Button onClick={confirmSubmit}>Yes</Button>
+          {open && <Button onClick={() => setOpen(false)}>No</Button>}
+          <Button onClick={open ? confirmSubmit : closeModal}>
+            {open ? 'Yes' : 'OK'}
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

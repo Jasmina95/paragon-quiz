@@ -4,9 +4,7 @@ const quizCtrl = require('../controllers/quiz.controller');
 
 const router = express.Router();
 
-router
-  .route('/quizzes')
-  .post(authCtrl.requireSignIn, quizCtrl.createQuiz)
+router.route('/quizzes').post(authCtrl.requireSignIn, quizCtrl.createQuiz);
 
 router
   .route('/quizzes/drafts')
@@ -25,6 +23,10 @@ router
   .get(authCtrl.requireSignIn, quizCtrl.read)
   .put(authCtrl.requireSignIn, quizCtrl.update)
   .delete(authCtrl.requireSignIn, quizCtrl.remove);
+
+router
+  .route('/quizzes/quiz/user_results/:quizId')
+  .get(authCtrl.requireSignIn, quizCtrl.getStudentScoresPerQuiz);
 
 router
   .route('/quizzes/image')

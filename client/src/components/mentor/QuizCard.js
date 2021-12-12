@@ -24,7 +24,7 @@ const QuizCard = ({ quiz }) => {
       }
       sx={{
         width: '300px',
-        height: '400px',
+        height: '425px',
         mr: '20px',
         mb: '30px',
         position: 'relative',

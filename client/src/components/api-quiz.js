@@ -106,6 +106,21 @@ const readQuiz = async (id, token) => {
   }
 };
 
+const getStudentScores = async (id, token) => {
+  try {
+    const res = await axios.get(`${baseUrl}/quizzes/quiz/user_results/${id}`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    });
+    return res.data;
+  } catch (err) {
+    return console.log(err.data);
+  }
+};
+
 const updateQuiz = async (id, quiz, token) => {
   try {
     const res = await axios.put(`${baseUrl}/quizzes/quiz/${id}`, quiz, {
@@ -180,6 +195,7 @@ export {
   listPublishedQuizzes,
   listAllPublishedQuizzes,
   readQuiz,
+  getStudentScores,
   updateQuiz,
   removeQuiz,
   getImage,

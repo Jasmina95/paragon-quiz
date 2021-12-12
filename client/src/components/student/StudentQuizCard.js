@@ -82,7 +82,7 @@ const StudentQuizCard = ({ quiz }) => {
       <Card
         sx={{
           width: '300px',
-          height: '400px',
+          height: '525px',
           mr: '20px',
           mb: '30px',
           position: 'relative'

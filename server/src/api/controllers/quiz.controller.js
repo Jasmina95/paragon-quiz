@@ -1,4 +1,5 @@
 const Quiz = require('../models/quiz.model');
+const User = require('../models/user.model');
 const errorHandler = require('../helpers/dbErrorHandler');
 const fs = require('fs');
 const _ = require('lodash');
@@ -100,6 +101,26 @@ const read = (req, res) => {
   return res.status(200).json(req.quiz);
 };
 
+const getStudentScoresPerQuiz = (req, res) => {
+  if (req.auth._id === req.quiz.mentorId) {
+    User.find({ 'quizzes.quizId': req.quiz._id })
+      .sort('-quizzes.scores.score')
+      .exec((err, users) => {
+        if (err) {
+          return res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+          });
+        }
+
+        res.status(200).json(users);
+      });
+  } else {
+    return res.status(400).json({
+      error: 'Only mentor that created the quiz is able to see student results!'
+    });
+  }
+};
+
 const update = (req, res) => {
   if (req.auth.role === 'mentor') {
     if (req.body.published) {
@@ -197,6 +218,7 @@ module.exports = {
   listAllPublishedQuizzes,
   quizById,
   read,
+  getStudentScoresPerQuiz,
   update,
   remove,
   getImage,

@@ -59,7 +59,6 @@ const QuestionAnswer = ({
     let newAnswerObject = {};
 
     const keys = Object.keys(oldAnswers);
-    console.log(keys);
 
     for (let i = 0; i < keys.length; i++) {
       newAnswerObject[`answer${i + 1}`] = oldAnswers[keys[i]];
@@ -68,7 +67,7 @@ const QuestionAnswer = ({
     setAnswers(newAnswerObject);
     setCorrect(
       (newCorrect.length > 0 &&
-        newCorrect.some(answer => answer === answers[answerKey])) ||
+        newCorrect.some(answer => answer === newAnswerObject[answerKey])) ||
         false
     );
   };
